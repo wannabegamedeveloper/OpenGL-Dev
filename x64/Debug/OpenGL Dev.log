@@ -1,0 +1,3 @@
+﻿  graphics.cpp
+C:\Users\tusha\source\repos\OpenGL Dev\OpenGL Dev\graphics.cpp(5,17): warning C4101: 'window': unreferenced local variable
+  OpenGL Dev.vcxproj -> C:\Users\tusha\source\repos\OpenGL Dev\x64\Debug\OpenGL Dev.exe
