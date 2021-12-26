@@ -42,6 +42,9 @@
     <ClCompile Include="stb.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="default.vert">
@@ -64,9 +67,18 @@
     <ClInclude Include="VAO.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\..\Pictures\Screenshots\tex.png">
+    <Image Include="D:\Quixel Mixes\Snow\tex.png">
+      <Filter>Resource Files\Textures</Filter>
+    </Image>
+    <Image Include="1.png">
+      <Filter>Resource Files\Textures</Filter>
+    </Image>
+    <Image Include="D:\Textures\1\2.jpg">
       <Filter>Resource Files\Textures</Filter>
     </Image>
   </ItemGroup>
