@@ -34,7 +34,7 @@ void GLFWHints()
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 }
 
-void CreateTriangle()
+void CreateTriangle(float test)
 {
     GLfloat vertices[] =
     {
@@ -69,7 +69,7 @@ void CreateTriangle()
 
     scale = glGetUniformLocation(shaderProgram->ID, "scale");
 
-    blend = new Texture("3.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
+    blend = new Texture("1.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
     blend->texUnit(*shaderProgram, "tex0", 0);
 }
 
@@ -102,15 +102,18 @@ int main(void)
 
     //SetWindowColor(0.3f, 0.4f, 0.2f, window);
     gladLoadGL();
-    CreateTriangle();
 
     float rotation = 0.0f;
     double prevTime = glfwGetTime();
 
+    float test = 0.0f;
+
     glEnable(GL_DEPTH_TEST);
 
+    CreateTriangle(test);
     while (!glfwWindowShouldClose(window))
-    {
+    {        
+        test += 0.01f;
         double currentTime = glfwGetTime();
         if (currentTime - prevTime >= 1 / 60)
         {
@@ -127,10 +130,11 @@ int main(void)
         glm::mat4 view = glm::mat4(1.0f);
         glm::mat4 proj  = glm::mat4(1.0f);
 
-        view = glm::translate(view, glm::vec3(0.0f, -0.5f, -2.0f));
+        view = glm::translate(view, glm::vec3(0.0f, 0.0f, -2.0f));
         proj = glm::perspective(glm::radians(45.0f), (float)(800 / 800), 0.1f, 100.0f);
 
-        model = glm::rotate(model, glm::radians(rotation), glm::vec3(0.0f, 1.0f, 0.0f));
+        model = glm::rotate(model, glm::radians(rotation), glm::vec3(1.0f, 1.0f, 1.0f));
+        model = glm::translate(model, glm::vec3(0.0f, 0.5f, 0.0f));
 
         int modelLoc = glGetUniformLocation(shaderProgram->ID, "model");
         glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));

@@ -72,9 +72,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="D:\Quixel Mixes\Snow\tex.png">
-      <Filter>Resource Files\Textures</Filter>
-    </Image>
     <Image Include="1.png">
       <Filter>Resource Files\Textures</Filter>
     </Image>
