@@ -10,6 +10,7 @@
 #include "EBO.h"
 #include "Shader.h"
 #include "Texture.h"
+#include "Camera.h"
 
 static const int _WIDTH = 1920;
 static const int _HEIGHT = 1080;
@@ -67,8 +68,6 @@ void CreateTriangle(float test)
     vbo1.Unbind();
     ebo1.Unbind();
 
-    scale = glGetUniformLocation(shaderProgram->ID, "scale");
-
     blend = new Texture("1.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
     blend->texUnit(*shaderProgram, "tex0", 0);
 }
@@ -103,47 +102,25 @@ int main(void)
     //SetWindowColor(0.3f, 0.4f, 0.2f, window);
     gladLoadGL();
 
-    float rotation = 0.0f;
-    double prevTime = glfwGetTime();
-
-    float test = 0.0f;
-
     glEnable(GL_DEPTH_TEST);
 
-    CreateTriangle(test);
-    while (!glfwWindowShouldClose(window))
-    {        
-        test += 0.01f;
-        double currentTime = glfwGetTime();
-        if (currentTime - prevTime >= 1 / 60)
-        {
-            rotation += .05f;
-            prevTime = currentTime;
-        }
+    float rot = 0.0f;
 
+    Camera camera(_WIDTH, _HEIGHT, glm::vec3(0.0f, 0.0f, 10.0f));
+
+    CreateTriangle(1.0f);
+    
+    while (!glfwWindowShouldClose(window))
+    {
+        rot += .05f;
         glViewport(0, 0, 800, 800);
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         shaderProgram->Activate();
 
-        glm::mat4 model = glm::mat4(1.0f);
-        glm::mat4 view = glm::mat4(1.0f);
-        glm::mat4 proj  = glm::mat4(1.0f);
+        camera.Inputs(window);
+        camera.Matrix(45.0f, 0.1f, 100.0f, shaderProgram, "camMatrix");
 
-        view = glm::translate(view, glm::vec3(0.0f, 0.0f, -2.0f));
-        proj = glm::perspective(glm::radians(45.0f), (float)(800 / 800), 0.1f, 100.0f);
-
-        model = glm::rotate(model, glm::radians(rotation), glm::vec3(1.0f, 1.0f, 1.0f));
-        model = glm::translate(model, glm::vec3(0.0f, 0.5f, 0.0f));
-
-        int modelLoc = glGetUniformLocation(shaderProgram->ID, "model");
-        glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-        int viewLoc = glGetUniformLocation(shaderProgram->ID, "view");
-        glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
-        int projLoc = glGetUniformLocation(shaderProgram->ID, "proj");
-        glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(proj));
-
-        glUniform1f(scale, .3f);
         blend->Bind();
         vao1->Bind();
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
