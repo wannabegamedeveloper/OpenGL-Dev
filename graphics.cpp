@@ -106,7 +106,7 @@ int main(void)
 
     float rot = 0.0f;
 
-    Camera camera(_WIDTH, _HEIGHT, glm::vec3(0.0f, 0.0f, 10.0f));
+    Camera camera(800, 800, glm::vec3(0.0f, 0.0f, 10.0f));
 
     CreateTriangle(1.0f);
     
